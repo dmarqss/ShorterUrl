@@ -1,77 +1,95 @@
+# 🔗 ShorterUrl API
 
-# Shorter Url
+## 📝 Descrição
 
-This project is an API made to shorten urls, using **Java, Java Spring, MongoDb with database**.
+**ShorterUrl** é uma API RESTful robusta e performática desenvolvida para encurtar URLs longas, gerando códigos curtos e exclusivos que redirecionam o usuário para o destino original.
 
+O backend foi construído com **Java + Spring Boot**, utilizando **MongoDB** como banco NoSQL para garantir alta performance e escalabilidade na persistência de URLs e estatísticas.
 
+---
 
+## ✨ Funcionalidades
 
-## Installation
+- 🔹 **Encurtamento de URL** — Converte URLs longas em códigos curtos e fáceis de compartilhar  
+- 🔹 **Redirecionamento Inteligente** — Retorna o usuário à URL original utilizando *HTTP 302 Found*  
+- 🔹 **Estatísticas de Uso** — Exibe o número de cliques realizados em cada link  
+- 🔹 **CRUD Completo** — Criar, visualizar, atualizar e deletar URLs encurtadas  
 
-- Clone the repository
+---
 
-- Install dependences with maven
+## 🚀 Tecnologias Utilizadas
 
-- Install MongoDb server
+| Categoria       | Tecnologia             | Versão |
+|-----------------|-------------------------|--------|
+| Linguagem       | Java                    | 17+    |
+| Framework       | Spring Boot             | 3.x    |
+| Banco de Dados  | MongoDB                 | Qualquer versão recente |
+| Build Tool      | Maven                   | Qualquer versão recente |
+| Outros          | Spring Data MongoDB, Lombok | — |
 
+---
 
+## 🛠️ Pré-requisitos
 
+Antes de iniciar, você precisa ter instalado:
 
+- **JDK 17+**
+- **Apache Maven**
+- **MongoDB** (local ou via Docker)
 
-#### Create Shorter Url
+---
 
-```http
-  POST localhost:8080/urlShorter
+## 💻 Instalação
+
+### 1️⃣ Clonar o Repositório
+
+```bash
+git clone https://github.com/dmarqss/ShorterUrl.git
+cd ShorterUrl
 ```
 
-| Parameter | Return     | Description                |
-| :-------- | :------- | :------------------------- |
-| `url` | `UrlModelResponse and 201 created or 400 bad request` | Create a shorter url |
+2️⃣ Configurar o Banco de Dados (MongoDB)
 
-#### Retrieve Original Url
-
-```http
-  GET localhost:8080/urlShorter/{shortUrl}
+Edite o arquivo:
+```bash
+src/main/resources/application.properties
 ```
-
-| Parameter | Return     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| ``      | `UrlModelResponse and 200 ok or 404 not found ` | Retrieve the original url from a short url |
-
-#### Update Url
-
-```http
-  PUT localhost:8080/urlShorter/{shortUrl}
+Exemplo:
+```bash
+spring.data.mongodb.uri=mongodb://localhost:27017/shorterurl-db
 ```
+Certifique-se de que o MongoDB está rodando.
+3️⃣ Executar o Projeto
 
-| Parameter | Return     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `New Url` | `UrlModelResponse and 200 ok or 400 bad request` | Update an existing short url |
-
-#### Delete Short Url
-
-```http
-  DELETE localhost:8080/urlShorter/{shortUrl}
+Compilar:
+```bash
+mvn clean install
 ```
-
-| Parameter | Return     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| ``   | `204 no content or 404 not found` |Delete an existing short url|
-
-#### Show Url Statistics 
-
-```http
-  GET localhost:8080/urlShorter/{shortUrl}/stats
+Rodar a aplicação:
+```bash
+mvn spring-boot:run
 ```
+A API ficará disponível em:
 
-| Parameter | Return     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| ``   | `UrlModel and 200 ok or 404 not found` |Get statistics for a short url |
+http://localhost:8080
+
+🚀 Endpoints da API
+
+| Operação               | Método   | URL                            | Descrição                                                                               |
+| ---------------------- | -------- | ------------------------------ | --------------------------------------------------------------------------------------- |
+| Criar URL curta        | `POST`   | `/urlShorter`                  | Cria uma nova URL curta. Deve passar no body: `{ "url": "<url original>" }`             |
+| Obter URL original     | `GET`    | `/urlShorter/{shortUrl}`       | Retorna a URL original correspondente à `shortUrl`.                                     |
+| Atualizar URL          | `PUT`    | `/urlShorter/{shortUrl}`       | Atualiza a URL original de uma `shortUrl` existente. Body: `{ "newUrl": "<nova URL>" }` |
+| Deletar URL curta      | `DELETE` | `/urlShorter/{shortUrl}`       | Deleta a URL curta especificada.                                                        |
+| Estatísticas de acesso | `GET`    | `/urlShorter/{shortUrl}/stats` | Retorna informações sobre uso da URL curta (por exemplo, número de acessos).            |
 
 
 
+✍️ Autor
 
-## Authors
+Desenvolvido por @dmarqss
 
-- [@dmarqss](https://github.com/dmarqss)
+📜 Licença
 
+Este projeto está licenciado sob a licença MIT.
+Consulte o arquivo LICENSE para mais detalhes.
